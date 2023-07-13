@@ -1,0 +1,19 @@
+.article__list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+@media (min-width: 768px){
+  .article__list {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+@media (min-width: 1024px){
+  .article__list {
+    row-gap: 60px;
+    column-gap: 50px;
+    margin-bottom: 5rem;
+  }
+}

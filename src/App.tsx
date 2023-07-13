@@ -1,25 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import './fonts.css';
+import Header from './components/Header/Header';
+import ArticleWindow from './components/ArticleWindow/ArticleWindow';
+import { ArticleType } from './types';
+import ArticleList from './components/ArticleList/ArticleList';
+import { useAppDispatch, useAppSelector } from './redux/hooks';
+import { getAllArticles } from './redux/articleList/thunks';
 
 function App() {
+  const [currentArticle, setCurrentArticle] = useState<ArticleType | null>(
+    null,
+  );
+
+  const dispatch = useAppDispatch();
+
+  const articleList = useAppSelector((state) => state.articleList);
+
+  const handleOpenArticleWindow = (index: number) => {
+    const currentArticle = articleList[index];
+
+    if (currentArticle) {
+      setCurrentArticle(currentArticle);
+    }
+  };
+
+  const handleCloseArticleWindow = () => {
+    setCurrentArticle(null);
+  };
+
+  useEffect(() => {
+    dispatch(getAllArticles());
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header />
+      <main>
+        <ArticleList handleOpenArticleWindow={handleOpenArticleWindow} />
+        {currentArticle && (
+          <ArticleWindow
+            article={currentArticle}
+            handleCloseArticleWindow={handleCloseArticleWindow}
+          />
+        )}
+      </main>
+    </>
   );
 }
 
