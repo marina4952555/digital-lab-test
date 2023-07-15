@@ -2,6 +2,7 @@
   "name": "digital-lab-test",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
